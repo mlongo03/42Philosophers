@@ -1,0 +1,64 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Philosophers.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/08 15:16:49 by mlongo            #+#    #+#             */
+/*   Updated: 2023/06/12 17:15:19 by mlongo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PHILOSOPHERS_H
+# define PHILOSOPHERS_H
+
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <pthread.h>
+# include <sys/time.h>
+# include <sys/types.h>
+# include <stdbool.h>
+# include <stdint.h>
+
+typedef struct s_philo
+{
+	struct s_data	*data;
+	pthread_t       t1;
+	int             id;
+	int             eat_cont;
+	int             status;
+	int             eating;
+	uint64_t        time_to_die;
+	pthread_mutex_t	lock;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	*l_fork;
+} t_philo;
+
+typedef struct s_data
+{
+	pthread_t       *tid;
+	int             philo_num;
+	int             meals_nb;
+	int             dead;
+	int             finished;
+	t_philo         *philos;
+	u_int64_t       death_time;
+	u_int64_t       eat_time;
+	u_int64_t       sleep_time;
+	u_int64_t       start_time;
+	pthread_mutex_t *forks;
+	pthread_mutex_t lock;
+	pthread_mutex_t write;
+} t_data;
+
+
+int			error(char *str, t_data *data);
+u_int64_t	get_time(void);
+int			ft_atoi(const char *nptr);
+void		init_philo(t_data *data);
+void		ft_exit(t_data *data);
+void		clear_data(t_data	*data);
+
+#endif
