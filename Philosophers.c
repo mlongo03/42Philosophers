@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:43:28 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/12 18:27:40 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/13 12:13:10 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,21 @@ int	main(int argc, char **argv)
 
 	i = 0;
 	init(&data, argv, argc);
-	// printf("DATA:");
-	// printf("dead : %d\ndeath_time : %lu\neat_time : %lu\nfinished : %d\nmeals_nb : %d\nphilo_num : %d\nsleep time : %lu\nstart_time : %lu\n", data.dead, data.death_time, data.eat_time, data.finished, data.meals_nb, data.philo_num, data.sleep_time, data.start_time);
-	// while (i < data.philo_num)
-	// {
-	// 	printf("PHLO N %d\n", data.philos[i++].id);
-	// 	printf("eat_cont : %d\neating : %d\nstatus : %d\ntime_to_die : %lu\n", data.philos[i].eat_cont, data.philos[i].eating, data.philos[i].status, data.philos[i].time_to_die);
-	// }
 	if (argc == 6)
-		pthread_create(&monitor, NULL, &routinemonitor, &data);
+	{
+		if (pthread_create(&monitor, NULL, &routinemonitor, &data))
+			return (1);
+		pthread_detach(monitor);
+	}
+	while (i < data.philo_num)
+	{
+		if (pthread_create(&data.tid[i], NULL, &routinePhilo, &data.philos[i]))
+			return (1);
+		pthread_detach(data.tid[i]);
+		ft_usleep(1);
+	}
+	while (!data.dead && !data.finished)
+		;
+	ft_exit(&data);
 	return (0);
 }

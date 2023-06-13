@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:16:49 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/12 17:15:19 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/13 14:20:58 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,15 @@ int			ft_atoi(const char *nptr);
 void		init_philo(t_data *data);
 void		ft_exit(t_data *data);
 void		clear_data(t_data	*data);
+void		*routinemonitor(void *data2);
+int			ft_usleep(u_int64_t time);
+void		print_all_data(t_data data);
+void		*routinePhilo(void	*philo2);
+void		*routineSupervisor(void *philo2);
+void		died(t_philo *philo);
+void		eat(t_philo *philo);
+void		has_taken_a_fork(t_philo *philo);
+void		sleep(t_philo *philo);
+void		thinking();
 
 #endif
