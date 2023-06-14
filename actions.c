@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:02:07 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/14 15:04:57 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/14 16:39:34 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->lock);
 	pthread_mutex_unlock(&philo->data->lock);
 	pthread_mutex_lock(&philo->data->write);
-	printf("%llu %d is eating\n", get_time() - philo->data->start_time, philo->id);
+	printf("%llu %d is eating\n", get_time()
+		- philo->data->start_time, philo->id);
 	pthread_mutex_unlock(&philo->data->write);
 	ft_usleep(philo->data->eat_time);
 	pthread_mutex_lock(&philo->lock);
@@ -46,14 +47,16 @@ void	eat(t_philo *philo)
 void	has_taken_a_fork(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->write);
-	printf("%llu %d has taken a fork\n", get_time() - philo->data->start_time, philo->id);
+	printf("%llu %d has taken a fork\n", get_time()
+		- philo->data->start_time, philo->id);
 	pthread_mutex_unlock(&philo->data->write);
 }
 
 void	mine_sleep(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->write);
-	printf("%llu %d is sleeping\n", get_time() - philo->data->start_time, philo->id);
+	printf("%llu %d is sleeping\n", get_time()
+		- philo->data->start_time, philo->id);
 	pthread_mutex_unlock(&philo->data->write);
 	ft_usleep(philo->data->sleep_time);
 }
@@ -61,6 +64,7 @@ void	mine_sleep(t_philo *philo)
 void	thinking(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->write);
-	printf("%llu %d is thinking\n", get_time() - philo->data->start_time, philo->id);
+	printf("%llu %d is thinking\n", get_time()
+		- philo->data->start_time, philo->id);
 	pthread_mutex_unlock(&philo->data->write);
 }

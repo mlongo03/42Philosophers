@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 18:28:12 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/14 15:11:54 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/14 16:37:18 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ void	*routinemonitor(void *data2)
 		{
 			pthread_mutex_lock(&data->lock);
 			data->finished = 1;
-			ft_usleep(1);
+			ft_usleep(10);
 			pthread_mutex_unlock(&data->lock);
 		}
 	}
 	return (NULL);
 }
 
-void	*routineSupervisor(void *philo2)
+void	*routine_supervisor(void *philo2)
 {
 	int		i;
 	t_philo	*philo;
@@ -55,7 +55,7 @@ void	*routineSupervisor(void *philo2)
 			pthread_mutex_lock(&philo->data->lock);
 			died(philo);
 			philo->data->dead = 1;
-			ft_usleep(10);
+			ft_usleep(10000);
 			pthread_mutex_unlock(&philo->data->write);
 			pthread_mutex_unlock(&philo->data->lock);
 			break ;
@@ -65,14 +65,14 @@ void	*routineSupervisor(void *philo2)
 	return (NULL);
 }
 
-void	*routinePhilo(void	*philo2)
+void	*routine_philo(void	*philo2)
 {
 	int		i;
 	t_philo	*philo;
 
 	i = 0;
 	philo = (t_philo *)philo2;
-	if (pthread_create(&philo->t1, NULL, &routineSupervisor, (void *)philo))
+	if (pthread_create(&philo->t1, NULL, &routine_supervisor, (void *)philo))
 		return (NULL);
 	while (!philo->data->dead && !philo->data->finished)
 	{

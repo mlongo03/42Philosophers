@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:43:28 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/14 15:02:22 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/14 16:44:58 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_philo(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < data->philo_num)
@@ -49,7 +49,8 @@ void	init_mutex(t_data *data)
 void	storage(t_data *data)
 {
 	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->philo_num);
-	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * data->philo_num);
+	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* data->philo_num);
 	data->tid = (pthread_t *)malloc(sizeof(pthread_mutex_t) * data->philo_num);
 }
 
@@ -69,18 +70,16 @@ void	init(t_data *data, char **argv, int argc)
 	storage(data);
 	init_mutex(data);
 	init_philo(data);
-
 }
 
 int	main(int argc, char **argv)
 {
 	pthread_t	monitor;
 	t_data		data;
-	int		i;
+	int			i;
 
 	i = 0;
 	init(&data, argv, argc);
-	// print_all_data(data);
 	if (argc == 6)
 	{
 		if (pthread_create(&monitor, NULL, &routinemonitor, &data))
@@ -89,7 +88,7 @@ int	main(int argc, char **argv)
 	}
 	while (i < data.philo_num)
 	{
-		if (pthread_create(&data.tid[i], NULL, &routinePhilo, &data.philos[i]))
+		if (pthread_create(&data.tid[i], NULL, &routine_philo, &data.philos[i]))
 			return (1);
 		pthread_detach(data.tid[i]);
 		ft_usleep(1);
@@ -97,7 +96,6 @@ int	main(int argc, char **argv)
 	}
 	while (!data.dead && !data.finished)
 		;
-	// print_all_data(data);
 	ft_exit(&data);
 	return (0);
 }

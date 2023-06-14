@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:03:39 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/14 12:44:33 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/14 16:44:37 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,16 @@ u_int64_t	get_time(void)
 int	ft_usleep(u_int64_t time)
 {
 	u_int64_t	start;
+
 	start = get_time();
 	while ((get_time() - start) < time)
 		usleep(time / 10);
-	return(0);
+	return (0);
 }
 
-void	print_all_data(t_data data)
+/*void	print_all_data (t_data data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	printf("DATA:");
@@ -76,4 +77,4 @@ void	print_all_data(t_data data)
 		printf("eat_cont : %d\neating : %d\nstatus : %d\ntime_to_die : %llu\n", data.philos[i].eat_cont, data.philos[i].eating, data.philos[i].status, data.philos[i].time_to_die);
 		i++;
 	}
-}
+}*/
