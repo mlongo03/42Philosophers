@@ -68,7 +68,7 @@ void		*routineSupervisor(void *philo2);
 void		died(t_philo *philo);
 void		eat(t_philo *philo);
 void		has_taken_a_fork(t_philo *philo);
-void		sleep(t_philo *philo);
-void		thinking();
+void		mine_sleep(t_philo *philo);
+void		thinking(t_philo *philo);
 
 #endif

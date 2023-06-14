@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:43:28 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/13 12:13:10 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/14 15:02:22 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	init_philo(t_data *data)
 		data->philos[i].eat_cont = 0;
 		data->philos[i].eating = 0;
 		data->philos[i].id = i + 1;
-		data->philos[i].time_to_die = 0;
+		data->philos[i].time_to_die = get_time() + data->death_time;
 		data->philos[i].r_fork = &data->forks[i];
 		if (i == 0)
 			data->philos[i].l_fork = &data->forks[data->philo_num - 1];
@@ -63,8 +63,8 @@ void	init(t_data *data, char **argv, int argc)
 	else
 		data->meals_nb = -1;
 	data->sleep_time = (u_int64_t)ft_atoi(argv[4]);
-	data->death_time = (u_int64_t)ft_atoi(argv[3]);
-	data->eat_time = (u_int64_t)ft_atoi(argv[2]);
+	data->death_time = (u_int64_t)ft_atoi(argv[2]);
+	data->eat_time = (u_int64_t)ft_atoi(argv[3]);
 	data->start_time = get_time();
 	storage(data);
 	init_mutex(data);
@@ -80,6 +80,7 @@ int	main(int argc, char **argv)
 
 	i = 0;
 	init(&data, argv, argc);
+	// print_all_data(data);
 	if (argc == 6)
 	{
 		if (pthread_create(&monitor, NULL, &routinemonitor, &data))
@@ -92,9 +93,11 @@ int	main(int argc, char **argv)
 			return (1);
 		pthread_detach(data.tid[i]);
 		ft_usleep(1);
+		i++;
 	}
 	while (!data.dead && !data.finished)
 		;
+	// print_all_data(data);
 	ft_exit(&data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 18:28:12 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/13 12:52:31 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/14 15:11:54 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,24 @@ void	*routinemonitor(void *data2)
 
 	i = 0;
 	data = (t_data *)data2;
-	while (1)
+	while (!data->finished && !data->dead)
 	{
 		i = 0;
 		while (i < data->philo_num)
 		{
-			if (data->philos[i].eat_cont >= data->meals_nb)
+			if (data->philos[i].eat_cont < data->meals_nb)
 				break ;
 			i++;
 		}
-		if (i == data->philo_num - 1)
-			break ;
+		if (i == data->philo_num)
+		{
+			pthread_mutex_lock(&data->lock);
+			data->finished = 1;
+			ft_usleep(1);
+			pthread_mutex_unlock(&data->lock);
+		}
 	}
-	data->finished = 1;
+	return (NULL);
 }
 
 void	*routineSupervisor(void *philo2)
@@ -41,15 +46,23 @@ void	*routineSupervisor(void *philo2)
 
 	i = 0;
 	philo = (t_philo *)philo2;
-	while (!philo->data->dead)
+	while (!philo->data->dead && !philo->data->finished)
 	{
-		ft_usleep(1);
-		philo->time_to_die++;
-		if (philo->time_to_die == philo->data->dead && !philo->eating)
-			dead();
-		if (philo->eating)
-			philo->time_to_die = 0;
+		pthread_mutex_lock(&philo->lock);
+		if ((get_time() >= philo->time_to_die) && !philo->eating)
+		{
+			pthread_mutex_unlock(&philo->lock);
+			pthread_mutex_lock(&philo->data->lock);
+			died(philo);
+			philo->data->dead = 1;
+			ft_usleep(10);
+			pthread_mutex_unlock(&philo->data->write);
+			pthread_mutex_unlock(&philo->data->lock);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->lock);
 	}
+	return (NULL);
 }
 
 void	*routinePhilo(void	*philo2)
@@ -60,10 +73,12 @@ void	*routinePhilo(void	*philo2)
 	i = 0;
 	philo = (t_philo *)philo2;
 	if (pthread_create(&philo->t1, NULL, &routineSupervisor, (void *)philo))
-		return (1);
-	while (!philo->data->dead)
+		return (NULL);
+	while (!philo->data->dead && !philo->data->finished)
 	{
-		eat();
-		sleep();
+		eat(philo);
+		mine_sleep(philo);
+		thinking(philo);
 	}
+	return (NULL);
 }

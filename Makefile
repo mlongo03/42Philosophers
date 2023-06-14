@@ -18,7 +18,7 @@ OBJS := Philosophers.o threads.o utils.o ft_atoi.o actions.o
 
 OBJS_BONUS :=
 
-FLAGS := -Wall -Werror -Wextra
+FLAGS := -Wall -Werror -Wextra -g -pthread
 
 #COLORS
 RED = \033[1;31m
@@ -37,7 +37,7 @@ bonus: $(NAME_BONUS)
 	@cc $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	@cc $(OBJS) ${LIBFT} $(FT_PRINTF) -o $(NAME) -fsanitize=address
+	@cc $(FLAGS) $(OBJS) ${LIBFT} $(FT_PRINTF) -o $(NAME)
 	@echo "$(GREEN)$(NAME) created!$(DEFAULT)"
 
 $(NAME_BONUS): $(OBJS_BONUS)
