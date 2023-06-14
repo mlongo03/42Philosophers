@@ -6,7 +6,7 @@
 #    By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 11:21:41 by mlongo            #+#    #+#              #
-#    Updated: 2023/06/14 15:46:40 by mlongo           ###   ########.fr        #
+#    Updated: 2023/06/14 16:55:42 by mlongo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,11 +37,11 @@ bonus: $(NAME_BONUS)
 	@cc $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	@cc $(FLAGS) $(OBJS) ${LIBFT} $(FT_PRINTF) -o $(NAME) -fsanitize=address
+	@cc $(FLAGS) $(OBJS) -o $(NAME) -fsanitize=address
 	@echo "$(GREEN)$(NAME) created!$(DEFAULT)"
 
 $(NAME_BONUS): $(OBJS_BONUS)
-	@cc $(OBJS_BONUS) ${LIBFT} $(FT_PRINTF) -o $(NAME_BONUS) -fsanitize=address
+	@cc $(OBJS_BONUS) -o $(NAME_BONUS) -fsanitize=address
 	@echo "$(GREEN)$(NAME_BONUS) created!$(DEFAULT)"
 
 clean:
