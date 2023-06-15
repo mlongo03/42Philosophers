@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 18:28:12 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/14 16:37:18 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/15 12:49:01 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	*routine_philo(void	*philo2)
 	philo = (t_philo *)philo2;
 	if (pthread_create(&philo->t1, NULL, &routine_supervisor, (void *)philo))
 		return (NULL);
+	pthread_detach(philo->t1);
 	while (!philo->data->dead && !philo->data->finished)
 	{
 		eat(philo);

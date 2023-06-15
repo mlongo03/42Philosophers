@@ -6,7 +6,7 @@
 #    By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 11:21:41 by mlongo            #+#    #+#              #
-#    Updated: 2023/06/14 17:01:08 by mlongo           ###   ########.fr        #
+#    Updated: 2023/06/15 12:53:21 by mlongo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ all: $(NAME)
 	@cc $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	@cc $(FLAGS) $(OBJS) -o $(NAME) -fsanitize=address
+	@cc $(FLAGS) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)$(NAME) created!$(DEFAULT)"
 
 clean:
