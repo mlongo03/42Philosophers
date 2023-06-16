@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 12:28:30 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/16 17:20:57 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/16 19:21:39 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,10 @@ int	main(int argc, char **argv)
 	int			i;
 
 	init(&data, argv, argc);
-	if (data.meals_nb == -1)
-		data.pidmonitor = fork();
-	if (data.pidmonitor == 0)
-		routinemonitor((void *)&data);
 	data.pid = (int *)malloc(sizeof(int) * data.philo_num);
 	i = 0;
 	while (i < data.philo_num)
 	{
-		printf("ok\n");
 		data.pid[i] = fork();
 		if (data.pid[i] == 0)
 			routine_philo(&data.philos[i]);
