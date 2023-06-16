@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:02:07 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/14 16:39:34 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/16 12:41:57 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	eat(t_philo *philo)
 	ft_usleep(philo->data->eat_time);
 	pthread_mutex_lock(&philo->lock);
 	philo->eating = 0;
-	pthread_mutex_unlock(&philo->lock);
 	pthread_mutex_unlock(&philo->lock);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);

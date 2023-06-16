@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:16:49 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/15 16:41:50 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/16 12:23:58 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,11 @@ typedef struct s_philo
 	int				status;
 	int				eating;
 	uint64_t		time_to_die;
-	pthread_mutex_t	lock;
-	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	*l_fork;
+	sem_t			sem_philo;
 }	t_philo;
 
 typedef struct s_data
 {
-	pthread_t		*tid;
 	int				philo_num;
 	int				meals_nb;
 	int				dead;
@@ -51,9 +48,9 @@ typedef struct s_data
 	u_int64_t		eat_time;
 	u_int64_t		sleep_time;
 	u_int64_t		start_time;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	lock;
-	pthread_mutex_t	write;
+	sem_t			sem_forks;
+	sem_t			sem_data;
+	sem_t			sem_write;
 }	t_data;
 
 int			error(char *str, t_data *data);
