@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 12:28:30 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/16 12:33:47 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/16 17:20:57 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,18 @@
 void	init_philo(t_data *data)
 {
 	int	i;
+	char number[2];
+	char *itoa;
 
 	i = 0;
 	while (i < data->philo_num)
 	{
-		sem_unlink(ft_itoa(i + 1));
-		data->philos[i].sem_philo = sem_open(ft_itoa(i + 1), O_CREATE, 1);
+		number[0] = '/';
+		itoa = ft_itoa(i + 1);
+		number[1] = itoa[0];
+		sem_unlink(number);
+		data->philos[i].sem_philo = sem_open(number, O_CREAT, 0644, 1);
+		free(itoa);
 		data->philos[i].data = data;
 		data->philos[i].eat_cont = 0;
 		data->philos[i].eating = 0;
@@ -37,12 +43,12 @@ void	init_sem(t_data *data)
 
 	i = 0;
 	i = 0;
-	sem_unlink("FORKS");
-	sem_unlink("WRITE");
-	sem_unlink("DATA");
-	data->sem_forks = sem_open("FORKS", O_CREATE, ft_atoi(argv[1]));
-	data->sem_write = sem_open("WRITE", O_CREATE, 1);
-	data->sem_write = sem_open("DATA", O_CREATE, 1);
+	sem_unlink("/FORKS");
+	sem_unlink("/WRITE");
+	sem_unlink("/DATA");
+	data->sem_forks = sem_open("/FORKS", O_CREAT, 0644, data->philo_num / 2);
+	data->sem_write = sem_open("/WRITE", O_CREAT, 0644, 1);
+	data->sem_data = sem_open("/DATA", O_CREAT, 0644, 1);
 }
 
 void	init(t_data *data, char **argv, int argc)
@@ -59,36 +65,38 @@ void	init(t_data *data, char **argv, int argc)
 	data->eat_time = (u_int64_t)ft_atoi(argv[3]);
 	data->start_time = get_time();
 	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->philo_num);
+	data->pidmonitor = 0;
 	init_sem(data);
 	init_philo(data);
 }
 
 int	main(int argc, char **argv)
 {
-	pthread_t	monitor;
 	t_data		data;
 	int			i;
-	int			*pid;
-
-// INIZIALIZATION OF EVERY STRUCT
 
 	init(&data, argv, argc);
-
-// CREATION OF PROCESSES OF EVERY PHILO
-
-	pid = (int *)malloc(sizeof(int) * data.philo_num);
+	if (data.meals_nb == -1)
+		data.pidmonitor = fork();
+	if (data.pidmonitor == 0)
+		routinemonitor((void *)&data);
+	data.pid = (int *)malloc(sizeof(int) * data.philo_num);
 	i = 0;
 	while (i < data.philo_num)
 	{
-		pid[i] = fork();
-		if (pid == 0)
+		printf("ok\n");
+		data.pid[i] = fork();
+		if (data.pid[i] == 0)
 			routine_philo(&data.philos[i]);
 		i++;
 	}
-
-// WAIT UNTIL EVERY PROCESS IS FINISHED, THEN FREE AND EXIT
-
 	waitpid(-1, NULL, 0);
+	i = 0;
+	while (i < data.philo_num)
+	{
+		kill(data.pid[i], SIGTERM);
+		i++;
+	}
 	ft_exit(&data);
 	return (0);
 }

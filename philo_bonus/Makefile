@@ -6,13 +6,13 @@
 #    By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 11:21:41 by mlongo            #+#    #+#              #
-#    Updated: 2023/06/14 17:00:19 by mlongo           ###   ########.fr        #
+#    Updated: 2023/06/16 17:12:50 by mlongo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := philo_bonus
 
-OBJS := Philosophers.o threads.o utils.o ft_atoi.o actions.o
+OBJS := Philosophers_bonus.o Processes.o utils.o ft_atoi.o ft_itoa.o actions.o
 
 FLAGS := -Wall -Werror -Wextra -g -pthread
 

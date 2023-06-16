@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 11:03:39 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/16 16:46:14 by mlongo           ###   ########.fr       */
+/*   Created: 2023/06/16 16:42:20 by mlongo            #+#    #+#             */
+/*   Updated: 2023/06/16 17:16:07 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Philosophers.h"
+#include "Philosophers_bonus.h"
 
 int	error(char *str, t_data *data)
 {
@@ -20,29 +20,12 @@ int	error(char *str, t_data *data)
 	return (1);
 }
 
-void	clear_data(t_data	*data)
-{
-	if (data->tid)
-		free(data->tid);
-	if (data->forks)
-		free(data->forks);
-	if (data->philos)
-		free(data->philos);
-}
-
 void	ft_exit(t_data *data)
 {
-	int	i;
-
-	i = -1;
-	while (++i < data->philo_num)
-	{
-		pthread_mutex_destroy(&data->forks[i]);
-		pthread_mutex_destroy(&data->philos[i].lock);
-	}
-	pthread_mutex_destroy(&data->write);
-	pthread_mutex_destroy(&data->lock);
-	clear_data(data);
+	if (data->pid)
+		free(data->pid);
+	if (data->philos)
+		free(data->philos);
 }
 
 u_int64_t	get_time(void)
@@ -64,7 +47,7 @@ int	ft_usleep(u_int64_t time)
 	return (0);
 }
 
-/*void	print_all_data (t_data data)
+void	print_all_data (t_data data)
 {
 	int	i;
 
@@ -77,4 +60,4 @@ int	ft_usleep(u_int64_t time)
 		printf("eat_cont : %d\neating : %d\nstatus : %d\ntime_to_die : %llu\n", data.philos[i].eat_cont, data.philos[i].eating, data.philos[i].status, data.philos[i].time_to_die);
 		i++;
 	}
-}*/
+}

@@ -6,11 +6,11 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:14:20 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/12 17:17:32 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/16 17:01:38 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Philosophers.h"
+#include "Philosophers_bonus.h"
 #include <limits.h>
 #include <stdio.h>
 

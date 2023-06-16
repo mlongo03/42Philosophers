@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:16:49 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/16 12:23:58 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/16 17:03:24 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <stdbool.h>
 # include <stdint.h>
 # include <semaphore.h>
+# include <signal.h>
 
 typedef struct s_philo
 {
@@ -34,11 +35,13 @@ typedef struct s_philo
 	int				status;
 	int				eating;
 	uint64_t		time_to_die;
-	sem_t			sem_philo;
+	sem_t			*sem_philo;
 }	t_philo;
 
 typedef struct s_data
 {
+	int				pidmonitor;
+	int				*pid;
 	int				philo_num;
 	int				meals_nb;
 	int				dead;
@@ -48,9 +51,9 @@ typedef struct s_data
 	u_int64_t		eat_time;
 	u_int64_t		sleep_time;
 	u_int64_t		start_time;
-	sem_t			sem_forks;
-	sem_t			sem_data;
-	sem_t			sem_write;
+	sem_t			*sem_forks;
+	sem_t			*sem_data;
+	sem_t			*sem_write;
 }	t_data;
 
 int			error(char *str, t_data *data);
@@ -69,5 +72,6 @@ void		eat(t_philo *philo);
 void		has_taken_a_fork(t_philo *philo);
 void		mine_sleep(t_philo *philo);
 void		thinking(t_philo *philo);
+char		*ft_itoa(int n);
 
 #endif
