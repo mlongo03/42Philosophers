@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:34:36 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/16 19:27:59 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/19 12:11:49 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,13 @@ void	*routine_philo(void	*philo2)
 	while (!philo->data->dead && !philo->data->finished)
 	{
 		eat(philo);
+		if (philo->data->finished)
+			break ;
 		mine_sleep(philo);
+		if (philo->data->finished)
+			break ;
 		thinking(philo);
 	}
 	ft_exit(philo->data);
-	exit (1);
+	exit (0);
 }

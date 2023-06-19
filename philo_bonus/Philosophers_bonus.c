@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 12:28:30 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/16 19:21:39 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/19 12:16:50 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,9 @@ int	main(int argc, char **argv)
 {
 	t_data		data;
 	int			i;
+	int			exit_status;
 
+	exit_status = 0;
 	init(&data, argv, argc);
 	data.pid = (int *)malloc(sizeof(int) * data.philo_num);
 	i = 0;
@@ -85,7 +87,14 @@ int	main(int argc, char **argv)
 			routine_philo(&data.philos[i]);
 		i++;
 	}
-	waitpid(-1, NULL, 0);
+	i = 0;
+	waitpid(-1, &exit_status, 0);
+	 if (WEXITSTATUS(exit_status) == 0 && data.meals_nb > 0)
+		while (i < data.philo_num && WEXITSTATUS(exit_status) == 0)
+		{
+			waitpid(-1, &exit_status, 0);
+			i++;
+		}
 	i = 0;
 	while (i < data.philo_num)
 	{
