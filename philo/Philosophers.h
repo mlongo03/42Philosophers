@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:16:49 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/14 16:36:57 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/19 17:40:11 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ void		eat(t_philo *philo);
 void		has_taken_a_fork(t_philo *philo);
 void		mine_sleep(t_philo *philo);
 void		thinking(t_philo *philo);
+int			init(t_data *data, char **argv, int argc);
 
 #endif

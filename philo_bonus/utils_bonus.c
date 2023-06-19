@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:42:20 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/16 17:16:07 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:24:08 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,4 @@ int	ft_usleep(u_int64_t time)
 	while ((get_time() - start) < time)
 		usleep(time / 10);
 	return (0);
-}
-
-void	print_all_data (t_data data)
-{
-	int	i;
-
-	i = 0;
-	printf("DATA:");
-	printf("dead : %d\ndeath_time : %llu\neat_time : %llu\nfinished : %d\nmeals_nb : %d\nphilo_num : %d\nsleep time : %llu\nstart_time : %llu\n", data.dead, data.death_time, data.eat_time, data.finished, data.meals_nb, data.philo_num, data.sleep_time, data.start_time);
-	while (i < data.philo_num)
-	{
-		printf("PHILO N %d\n", data.philos[i].id);
-		printf("eat_cont : %d\neating : %d\nstatus : %d\ntime_to_die : %llu\n", data.philos[i].eat_cont, data.philos[i].eating, data.philos[i].status, data.philos[i].time_to_die);
-		i++;
-	}
 }

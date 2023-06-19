@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   actions.c                                          :+:      :+:    :+:   */
+/*   actions_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:38:20 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/16 18:14:04 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:21:16 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	died(t_philo *philo)
 {
 	sem_wait(philo->data->sem_write);
 	printf("%llu %d is died\n", get_time() - philo->data->start_time, philo->id);
-	//ricordati di aggiungere il sem_post nel supervisor
 }
 
 void	eat(t_philo *philo)

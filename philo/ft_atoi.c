@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:14:20 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/12 17:17:32 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/19 17:58:27 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,33 @@ static int	ft_isdigit(int c)
 	return (c >= '0' && c <= '9');
 }
 
-static void	error_long(void)
+static int	ft_error(void)
 {
 	printf("Error\n");
-	exit (1);
-}
-
-static int	ft_sign(char c)
-{
-	return (c == '-' || c == '+');
+	return (1);
 }
 
 static int	ft_spaces(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n' || c == '\r'
 		|| c == '\v' || c == '\f');
+}
+
+static int	check_int(char *str)
+{
+	int	j;
+
+	j = 0;
+	while (str[j])
+	{
+		if (str[j] < 48 || str[j] > 57)
+		{
+			ft_error();
+			return (1);
+		}
+		j++;
+	}
+	return (0);
 }
 
 int	ft_atoi(const char *nptr)
@@ -43,11 +55,13 @@ int	ft_atoi(const char *nptr)
 	long	r;
 
 	p = (char *) nptr;
+	if (check_int(p))
+		return (-2);
 	s = 1;
 	r = 0;
 	while (ft_spaces(*p))
 		p++;
-	if (ft_sign(*p))
+	if (*p == '-' || *p == '+')
 	{
 		if (*p == '-')
 			s = -1;
@@ -59,6 +73,6 @@ int	ft_atoi(const char *nptr)
 		r += *(p++) - 48;
 	}
 	if ((r * s) > INT_MAX || (r * s) < INT_MIN)
-		error_long();
+		ft_error();
 	return (r * s);
 }

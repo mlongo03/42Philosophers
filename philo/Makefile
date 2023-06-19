@@ -6,13 +6,13 @@
 #    By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 11:21:41 by mlongo            #+#    #+#              #
-#    Updated: 2023/06/15 12:53:21 by mlongo           ###   ########.fr        #
+#    Updated: 2023/06/19 17:45:18 by mlongo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := philo
 
-OBJS := Philosophers.o threads.o utils.o ft_atoi.o actions.o
+OBJS := Philosophers.o threads.o utils.o ft_atoi.o actions.o init.o
 
 FLAGS := -Wall -Werror -Wextra -g -pthread
 

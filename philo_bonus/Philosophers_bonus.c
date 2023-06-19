@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 12:28:30 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/19 12:16:50 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/19 17:40:48 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	init_philo(t_data *data)
 {
-	int	i;
-	char number[2];
-	char *itoa;
+	int		i;
+	char	number[2];
+	char	*itoa;
 
 	i = 0;
 	while (i < data->philo_num)
@@ -70,12 +70,35 @@ void	init(t_data *data, char **argv, int argc)
 	init_philo(data);
 }
 
+void	handle_meals(int exit_status, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	if (WEXITSTATUS(exit_status) == 0 && data->meals_nb > 0)
+	{
+		while (i < data->philo_num && WEXITSTATUS(exit_status) == 0)
+		{
+			waitpid(data->pid[i], &exit_status, 0);
+			i++;
+		}
+	}
+	i = 0;
+	while (i < data->philo_num)
+		kill(data->pid[i++], SIGTERM);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data		data;
 	int			i;
 	int			exit_status;
 
+	if (argc != 5 && argc != 6)
+	{
+		printf("Error\n");
+		return (0);
+	}
 	exit_status = 0;
 	init(&data, argv, argc);
 	data.pid = (int *)malloc(sizeof(int) * data.philo_num);
@@ -87,20 +110,8 @@ int	main(int argc, char **argv)
 			routine_philo(&data.philos[i]);
 		i++;
 	}
-	i = 0;
 	waitpid(-1, &exit_status, 0);
-	 if (WEXITSTATUS(exit_status) == 0 && data.meals_nb > 0)
-		while (i < data.philo_num && WEXITSTATUS(exit_status) == 0)
-		{
-			waitpid(-1, &exit_status, 0);
-			i++;
-		}
-	i = 0;
-	while (i < data.philo_num)
-	{
-		kill(data.pid[i], SIGTERM);
-		i++;
-	}
+	handle_meals(exit_status, &data);
 	ft_exit(&data);
 	return (0);
 }
