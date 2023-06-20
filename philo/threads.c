@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 18:28:12 by mlongo            #+#    #+#             */
-/*   Updated: 2023/06/15 12:49:01 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/06/20 17:06:04 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*routinemonitor(void *data2)
 		{
 			pthread_mutex_lock(&data->lock);
 			data->finished = 1;
-			ft_usleep(10);
+			ft_usleep(100);
 			pthread_mutex_unlock(&data->lock);
 		}
 	}
